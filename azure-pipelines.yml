@@ -98,7 +98,7 @@ jobs:
         - Windows_NT_arm64
       ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.DefinitionName'], 'gsvm.coreclr-ci')) }}:
         platforms:
-        - Windows_NT_x64
+        - Linux_x64
 
 #
 # Checked builds
