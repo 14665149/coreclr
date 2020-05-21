@@ -4,9 +4,13 @@ variables:
 
 trigger:
 - master
+- mips64-port
+- branch-test
 
 pr:
 - master
+- mips64-port
+- branch-test
 
 jobs:
 
@@ -92,6 +96,9 @@ jobs:
         - OSX_x64
         - Windows_NT_arm
         - Windows_NT_arm64
+      ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.DefinitionName'], 'theaoqi.coreclr-test-ci-mips')) }}:
+        platforms:
+        - Windows_NT_x64
 
 #
 # Checked builds
@@ -149,10 +156,16 @@ jobs:
         - Linux_x64
         - Windows_NT_x64
         - Windows_NT_x86
-      ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.DefinitionName'], 'coreclr-ci-mips64')) }}:
+      ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.DefinitionName'], 'theaoqi.coreclr-test-ci-mips')) }}:
         platforms:
+        - Linux_arm
         - Linux_arm64
         - Linux_x64
+        - OSX_x64
+        - Windows_NT_arm
+        - Windows_NT_arm64
+        - Windows_NT_x64
+        - Windows_NT_x86
 
 #
 # Release builds
@@ -177,6 +190,14 @@ jobs:
         - Linux_x64
         - OSX_x64
         - Windows_NT_x86
+      ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.DefinitionName'], 'theaoqi.coreclr-test-ci-mips')) }}:
+        platforms:
+        - Linux_arm64
+        - Linux_musl_x64
+        - Linux_rhel6_x64
+        - Windows_NT_arm
+        - Windows_NT_arm64
+        - Windows_NT_x64
 
 - ${{ if and(eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest')) }}:
   - template: eng/platform-matrix.yml
